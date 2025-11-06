@@ -1,8 +1,27 @@
 // import TimeDisplay from "./components/TimeDisplay";
-
+'use client'
+import { onAuthStateChanged } from "firebase/auth";
 import TimeDisplay from "./components/TimeDisplay";
+import { useEffect, useState } from "react";
+import { auth } from "./lib/firebase";
 
 export default function HomePage(){
+  const[user, setUser] =useState<any>(null)
+
+  useEffect(()=>{
+    const lookForLoggInUser= onAuthStateChanged(auth, (currentUser)=>{
+  
+  if (currentUser){
+    console.log("user logged in:", currentUser.email)
+    setUser(currentUser)
+  }
+  else{
+    console.log("No user logged in")
+    setUser(null)
+  }
+  })
+}, [])
+  
 
   return(
     <section className ="text-center py-20">

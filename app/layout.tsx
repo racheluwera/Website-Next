@@ -1,12 +1,28 @@
+'use client'
 import './globals.css';
 import Link from 'next/link';
+import { auth } from './lib/firebase';
+import { signOut } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 
-export const metadata = {
-  title: 'My Website',
-  description: 'Built with Next.js App Router',
-};
+
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
+
+  const handleLogout = async () =>{
+    try{
+      await signOut(auth)
+      alert("you have logged out successful!")
+      router.push('/login')
+    }catch(error){
+      console.log(error)
+      
+
+    }
+    }
+  
   return (
        <html lang="en">
       <body className="flex min-h-screen flex-col bg-gray-500 text-gray-900">
